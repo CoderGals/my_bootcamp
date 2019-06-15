@@ -4,7 +4,7 @@
 
 ### This might not seem germane, but let’s start with a linked list with different node types:
 
-'''
+```
   class ListNode(object):
     def __init__(self,val):
       self.val = val
@@ -39,7 +39,7 @@
   print myList.head.next
   print myList.head.next.next.bonus
 
-'''
+```
 
 In this example myList.head is just a pointer. It starts out pointing to None, and then we set it to point to an object when we add a node. The object it is pointing at has its own properties. In this case, all objects have two properties in common: val and next and one of the object types (CustomNode) has an additional property, named bonus.
 
@@ -47,7 +47,7 @@ We can access each of the properties in each node, as we move from node to node!
 
 Parts of the ORM work in a very similar way! Let’s look!
 
-'''
+```
   class User(models.Model):
       first_name = models.CharField(max_length=200)
       last_name = models.CharField(max_length=200)
@@ -66,7 +66,7 @@ Parts of the ORM work in a very similar way! Let’s look!
       message = models.ForeignKey(Message)
       created_at = models.DateTimeField(auto_now_add=True)
       updated_at = models.DateTimeField(auto_now=True)
-'''
+```
 
 Let’s look at the Comment class. An instance of the Comment class has two pointers to other objects. The pointers’ names are user which points to a User object instance, and message which points to a Message object instance. So just like in the linked list example, we could say something like: CommentInstance.message.message. The first message is the pointer to the message object. The second message is the actual message property of the message object. (To slightly clarify this if we changed the property ‘message’ in our Message class to “donutflavor” to get the donutflavor associated with a specific comment we’d go CommentInstance.message.donutflavor). In plainer English, this says we have an instance of a comment, that has a pointer to a message object. That message object has a number of properties/pointers, one of which is this donutflavor, which we are then accessing. This logic works great when a pointer is pointing at a specific object (like we discussed above, but what if we want to get all of specific message’s comments). A Messageinstance doesn’t have a pointer to all the comments… ENTER DJANGO!
 
