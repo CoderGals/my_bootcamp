@@ -75,23 +75,23 @@ Let’s look at the Comment class. An instance of the Comment class has two poin
 ### One to one
 This makes an imaginary property IN THE OBJECT THAT THE ONE_TO_ONE relationship is not defined in, in addition to the real property in the object that the relationship IS defined in. So if we had a one_to_one relationship in an object e.g.
 
-'''
+```
   class User(models.Model):
     first_name = models.CharField(max_length=45)
   class CustomUserId(models.Model):
     newId = models.IntegerField()
     specificUser = models.OneToOneField(User)
-'''
+```
 
 Here a userObject has a customUserId as well as a customUserId having a specificuser property. If we want to change the way we reference that artificially generated key, we could change our model like this:
 
-'''
+```
   class User(models.Model):
     first_name = models.CharField(max_length=45)
   class CustomUserId(models.Model):
     newId = models.IntegerField()
     specificUser = models.OneToOneField(User, related_name="myId")
-'''
+```
 
 Now the Userobject would reference the CustomUserId objects by userObject.myId (and then maybe .newId if you wanted to get that integer stored in newId)
 
@@ -101,7 +101,7 @@ One side of the one to many behaves just like the one_to_one relationship, and w
 User.objects.message_set.all()
 The above code would retrieve all of the messages associated with that particular user object. Much like with a OneToOneField, we can set a related name. If we do, the message_set piece of code would be replaced with related name.
 
-'''
+```
   class User(models.Model):
       first_name = models.CharField(max_length=200)
       last_name = models.CharField(max_length=200)
@@ -120,7 +120,7 @@ The above code would retrieve all of the messages associated with that particula
       message = models.ForeignKey(Message)
       created_at = models.DateTimeField(auto_now_add=True)
       updated_at = models.DateTimeField(auto_now=True)
-'''
+```
 
 This is of particular use when you have Class that joins to the same class more than once. (Since classname_set would not know which of the associations you are talking about!) Given the above model, note the related_name (‘messages’) now in our Message class? Now a user object can reference messages not through message_set, but through that related name: messages.
 
